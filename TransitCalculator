@@ -1,0 +1,44 @@
+import java.util.Arrays;
+public class TransitCalculator{
+  
+  int daysOfTravel;
+  int numberOfRides;
+  String[] passes = {"PayPerRide","SevenDayUnlimited","ThirtyDayUnlimited"};
+  double[] pricePerPass = {2.75,33.00,127.00};
+  
+  public TransitCalculator(int daysOfTrl, int numOfRides){
+  daysOfTravel = daysOfTrl;
+  numberOfRides = numOfRides;
+  }
+  public double unlimited7Price(){
+  double price7 = Math.ceil(daysOfTravel / 7);
+  double overAllPcPrRd = price7 * pricePerPass[1];
+  return overAllPcPrRd / numberOfRides;
+  }
+  public double[] getRidePrices(){
+  double perRide = pricePerPass[0];
+  double unlimited7Price = unlimited7Price();
+  double perRide30 = pricePerPass[2] / numberOfRides;
+  double pricePerRide[] = {perRide,unlimited7Price,perRide30};
+    return pricePerRide;
+  } 
+  public String getBestFare(){
+    double[] pricePR = getRidePrices();
+     int bestFareFindings = 0;
+    for(int i = 0; i < pricePR.length; i++){
+      if(pricePR[i] < pricePR[bestFareFindings]){
+        bestFareFindings = i;
+      }
+    }
+    return "You should get the " + passes[bestFareFindings] + " option at " + Math.round(pricePR[bestFareFindings] * 100.00) / 100.00 + " per ride.";
+  }
+  public static void main(String[]args){
+    
+    int daysOfTravel = 14;
+    int numberOfRides = 28;
+TransitCalculator nYCTrip = new TransitCalculator(daysOfTravel,numberOfRides);
+    System.out.println(nYCTrip.getBestFare());
+    
+  }
+  
+}
